@@ -36,8 +36,12 @@ public class MenuController : MonoBehaviour
             if(enemies[i].isDead == false)
             {
                 restartButton.SetActive(true);
+                restartButton.transform.position = new Vector3(restartButton.transform.position.x,
+                                                           -55,
+                                                           restartButton.transform.position.z);
+
                 restartButton.transform.DOMove(new Vector3(restartButton.transform.position.x,
-                                                           100,
+                                                           55,
                                                            restartButton.transform.position.z),
                                                            1f);
                 yield break;

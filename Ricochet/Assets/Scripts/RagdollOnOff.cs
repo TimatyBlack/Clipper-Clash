@@ -16,22 +16,11 @@ public class RagdollOnOff : MonoBehaviour
         RagdollModeOff();
     }
 
-    void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponent<Rigidbody>())
-        {
-            RagdollModeOn();
-        }
-    }
+        Vector3 direction = collision.transform.position - transform.position;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.GetComponent<Obstacle>())
+        if (collision.gameObject.GetComponent<Rigidbody>())
         {
             RagdollModeOn();
         }

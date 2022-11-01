@@ -48,7 +48,17 @@ public class Shooting : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent<Rigidbody>(out Rigidbody rigidbody) && isShooting == true)
-        {
+        {   
+            if(other.gameObject.TryGetComponent<RagdollOnOff>(out RagdollOnOff ragdolls))
+            {
+                ragdolls.RagdollModeOn();
+                Rigidbody[] rigidbodiesInChilddren = other.GetComponentsInChildren<Rigidbody>();
+                for(int i = 0; i < rigidbodiesInChilddren.Length; i++)
+                {
+                    rigidbodiesInChilddren[i].AddForce(transform.right * (force*0.5f), ForceMode.Impulse);
+                }
+            }
+
             rigidbody.AddForce(transform.right * force, ForceMode.Impulse);
             rigidbody.AddTorque(Vector3.forward * -180);
             Debug.DrawRay(transform.position, transform.right * force, Color.red, 5);
