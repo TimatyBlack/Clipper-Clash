@@ -6,6 +6,11 @@ using DG.Tweening;
 public class MenuController : MonoBehaviour
 {
     public GameObject restartButton;
+
+    public GameObject finger;
+    public GameObject fingerIdle;
+    public GameObject fingerClicked;
+
     public CanvasGroup winMenu;
     public Animator transition;
 
@@ -16,9 +21,27 @@ public class MenuController : MonoBehaviour
     public float transitionTime = 0.5f;
 
     private void Start()
-    {   
+    {
         if(shots != null)
         shots.onShoot += StartCheckCoroutine;
+    }
+
+
+    private void Update()
+    {
+        finger.transform.position = Input.mousePosition;
+
+        if (Input.GetMouseButton(0))
+        {
+            fingerClicked.SetActive(true);
+            fingerIdle.SetActive(false);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            fingerClicked.SetActive(false);
+            fingerIdle.SetActive(true);
+        }
     }
 
     private void StartCheckCoroutine()

@@ -11,6 +11,7 @@ public class Shooting : MonoBehaviour
 
     public GameObject spring;
     public GameObject hitEffect;
+    public AudioSource padAudioSource;
 
     public event System.Action onShoot;
 
@@ -41,7 +42,7 @@ public class Shooting : MonoBehaviour
             isShooting = true;
             pad_transform.DOLocalMove(finalShotPos, 0.2f).SetLoops(2, LoopType.Yoyo).OnComplete(() => { isShooting = false; });
             spring.transform.DOScale(finalSpringScale, 0.2f).SetLoops(2, LoopType.Yoyo);
-            onShoot();
+            onShoot?.Invoke();
         }
     }
 
@@ -55,18 +56,19 @@ public class Shooting : MonoBehaviour
                 Rigidbody[] rigidbodiesInChilddren = other.GetComponentsInChildren<Rigidbody>();
                 for(int i = 0; i < rigidbodiesInChilddren.Length; i++)
                 {
-                    rigidbodiesInChilddren[i].AddForce(transform.right * (force*0.5f), ForceMode.Impulse);
+                    rigidbodiesInChilddren[i].AddForce(transform.up * (force*0.5f), ForceMode.Impulse);
                 }
             }
 
-            rigidbody.AddForce(transform.right * force, ForceMode.Impulse);
+            rigidbody.AddForce(transform.up * force, ForceMode.Impulse);
             rigidbody.AddTorque(Vector3.forward * -180);
-            Debug.DrawRay(transform.position, transform.right * force, Color.red, 5);
+            Debug.DrawRay(transform.position, transform.up * force, Color.red, 5);
         }
 
         if (isHit == false && !other.gameObject.CompareTag("Wall"))
         {
             Instantiate(hitEffect, transform.position, Quaternion.identity);
+            padAudioSource.Play();
             isHit = true;
         }
     }

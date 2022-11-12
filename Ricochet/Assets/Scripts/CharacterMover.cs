@@ -32,7 +32,10 @@ public class CharacterMover : MonoBehaviour
         {
             var screenPos = Input.mousePosition;
             screenPos.z = 10f;
-            _target.position = _cam.ScreenToWorldPoint(screenPos);
+
+            var targetPos = _cam.ScreenToWorldPoint(screenPos);
+            targetPos.z = 0;
+            _target.position = targetPos;
         }
     }
 

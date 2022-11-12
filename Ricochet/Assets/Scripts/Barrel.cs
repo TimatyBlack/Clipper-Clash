@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Barrel : MonoBehaviour
 {
-    private MeshRenderer renderer;
+    private MeshRenderer barRenderer;
     private Material[] materials;
 
+    public AudioSource explosionSound;
     public GameObject explosionEffect;
     public Color explosionColor = Color.red;
 
@@ -20,8 +21,8 @@ public class Barrel : MonoBehaviour
 
     void Start()
     {
-        renderer = GetComponent<MeshRenderer>();
-        materials = renderer.materials;
+        barRenderer = GetComponent<MeshRenderer>();
+        materials = barRenderer.materials;
         countdown = delay;
     }
 
@@ -31,7 +32,8 @@ public class Barrel : MonoBehaviour
     }
 
     void Explode()
-    {
+    {   
+        explosionSound.Play();
         Instantiate(explosionEffect, transform.position, transform.rotation);
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
@@ -76,7 +78,7 @@ public class Barrel : MonoBehaviour
 
             for(int i = 0; i < materials.Length; i++)
             {
-                renderer.materials[i].color = Color.Lerp(explosionColor, startColors[i], countdown / startCountdown);
+                barRenderer.materials[i].color = Color.Lerp(explosionColor, startColors[i], countdown / startCountdown);
             }
 
 

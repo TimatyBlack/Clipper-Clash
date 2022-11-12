@@ -7,6 +7,7 @@ public class RagdollOnOff : MonoBehaviour
     public BoxCollider mainCollider;
     public GameObject thisRig;
     public Animator animator;
+    public AudioSource dieSound;
 
     public bool isDead = false;
 
@@ -18,11 +19,16 @@ public class RagdollOnOff : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Vector3 direction = collision.transform.position - transform.position;
-
         if (collision.gameObject.GetComponent<Rigidbody>())
         {
             RagdollModeOn();
+
+            Vector3 direction = collision.transform.position - transform.position;
+
+            for (int i = 0; i < limbsRigidbodies.Length; i++)
+            {
+                limbsRigidbodies[i].AddForce(-direction.normalized * 2, ForceMode.Impulse);
+            }
         }
     }
 
@@ -36,6 +42,8 @@ public class RagdollOnOff : MonoBehaviour
 
     public void RagdollModeOn()
     {
+        dieSound.Play();
+
         isDead = true;
 
         animator.enabled = false;
@@ -51,6 +59,7 @@ public class RagdollOnOff : MonoBehaviour
         }
 
         mainCollider.enabled = false;
+
         GetComponent<Rigidbody>().isKinematic = true;
     }
 
