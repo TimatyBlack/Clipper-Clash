@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RagdollOnOff : MonoBehaviour
 {
+    public SkinnedMeshRenderer meshRenderer;
+    public Material grey;
     public BoxCollider mainCollider;
     public GameObject thisRig;
     public Animator animator;
@@ -61,6 +63,8 @@ public class RagdollOnOff : MonoBehaviour
         mainCollider.enabled = false;
 
         GetComponent<Rigidbody>().isKinematic = true;
+
+        meshRenderer.material = grey;
     }
 
     public void RagdollModeOff()
@@ -78,5 +82,6 @@ public class RagdollOnOff : MonoBehaviour
         animator.enabled = true;
         mainCollider.enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
+
     }
 }
