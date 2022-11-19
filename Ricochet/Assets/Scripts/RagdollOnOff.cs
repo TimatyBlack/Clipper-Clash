@@ -10,6 +10,7 @@ public class RagdollOnOff : MonoBehaviour
     public GameObject thisRig;
     public Animator animator;
     public AudioSource dieSound;
+    public float force = 25f;
 
     public bool isDead = false;
 
@@ -29,7 +30,7 @@ public class RagdollOnOff : MonoBehaviour
 
             for (int i = 0; i < limbsRigidbodies.Length; i++)
             {
-                limbsRigidbodies[i].AddForce(-direction.normalized * 2, ForceMode.Impulse);
+                limbsRigidbodies[i].AddForce(-direction.normalized * force, ForceMode.Impulse);
             }
         }
     }
